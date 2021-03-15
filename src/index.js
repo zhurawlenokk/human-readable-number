@@ -14,45 +14,49 @@ module.exports = function toReadable (num) {
         return 'zero'
     }
 
-    if(number < 20 && number >= 10) {
-        switch(number) {
-            case 10 : 
-                result = 'ten'
-                break
-            case 11 : 
-                result = 'eleven'
-                break
-            case 12 : 
-                result = 'twelve'
-                break
-            case 13 : 
-                result = 'thirteen'
-                break
-            case 14 : 
-                result = 'fourteen'
-                break
-            case 15 : 
-                result = 'fifteen'
-                break
-            case 16 : 
-                result = 'sixteen'
-                break
-            case 17 : 
-                result = 'seventeen'
-                break
-            case 18 : 
-                result = 'eighteen'
-                break
-            case 19 : 
-                result = 'nineteen'
-                break
-        }
-
-        return result;
-    }
-
     for(let i = 0; i < String(num).length; i++) {
+
         currentNumber = number % 10;
+
+        if(number % 100 < 20 && number % 100 >= 10 && countRank == 1) {
+            switch(number % 100) {
+                case 10 : 
+                    result = 'ten'
+                    break
+                case 11 : 
+                    result = 'eleven'
+                    break
+                case 12 : 
+                    result = 'twelve'
+                    break
+                case 13 : 
+                    result = 'thirteen'
+                    break
+                case 14 : 
+                    result = 'fourteen'
+                    break
+                case 15 : 
+                    result = 'fifteen'
+                    break
+                case 16 : 
+                    result = 'sixteen'
+                    break
+                case 17 : 
+                    result = 'seventeen'
+                    break
+                case 18 : 
+                    result = 'eighteen'
+                    break
+                case 19 : 
+                    result = 'nineteen'
+                    break
+            }
+    
+            countRank += 2;
+            number = Math.round(number / 100 - 0.5);
+            i++;
+            continue;   
+        }
 
         if(countRank === 1) {
             if(currentNumber !== 0) {
@@ -63,6 +67,9 @@ module.exports = function toReadable (num) {
         if(countRank === 2) {
             if(currentNumber !== 0) {
                 switch(currentNumber) {
+                    case 1 :
+                        result = 'ten ' + result
+                        break
                     case 2 : 
                         result = 'twenty ' + result
                         break
@@ -85,6 +92,8 @@ module.exports = function toReadable (num) {
             }
             
         }
+
+
 
         if(countRank === 3) {
             result = `${getSimpleNum(currentNumber)} ${objRank[countRank]} ${result}`
@@ -118,5 +127,6 @@ module.exports = function toReadable (num) {
             case 9 : 
                 return 'nine'
         }
-    } 
+    }
+
 }
